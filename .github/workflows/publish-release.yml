@@ -7,7 +7,7 @@ env:
   ACR_HOST: ${{secrets.ACR_HOST}}
   ACR_USER: ${{secrets.ACR_USER}}
   ACR_PASS: ${{secrets.ACR_PASS}}
-  IMAGE_TAG: ${{secrets.ACR_HOST}}/lazaromenezes/generatedata:$(date +%s)
+  IMAGE_TAG: ${{secrets.ACR_HOST}}/generatedata:$(date +%s)
 
 jobs:
   build:
