@@ -1,0 +1,38 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+env:
+  MYSQL_HOSTNAME: ${{secrets.GD_DB_HOSTNAME}}
+  MYSQL_USER: ${{secrets.GD_DB_USERNAME}}
+  MYSQL_PASSWORD: ${{secrets.GD_DB_PASSWORD}}
+  MYSQL_DB: "generatedata"
+  ACR_HOST: ${{secrets.ACR_HOST}}
+  ACR_USER: ${{secrets.ACR_USER}}
+  ACR_PASS: ${{secrets.ACR_PASS}}
+  IMAGE_TAG: lazaromenezes/generatedata:$(date +%s)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        docker build -e GD_DB_HOSTNAME=${{env.MYSQL_HOSTNAME}}
+        -e GD_DB_NAME=${{env.MYSQL_DB}}
+        -e GD_DB_USERNAME=${{env.MYSQL_USER}}
+        -e GD_DB_PASSWORD=${{env.MYSQL_PASS}}
+        --file Dockerfile 
+        --tag ${{env.IMAGE_TAG}}
+    - name: Push to Azure ACR
+      run: |
+        docker login -u ${{env.ACR_USER}} -p ${{env.ACR_PASS}} ${{env.ACR_HOST}}
+        docker push ${{env.IMAGE_TAG}}
+        
+    
+      
+
+    
+    
