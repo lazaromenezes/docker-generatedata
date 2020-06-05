@@ -7,7 +7,6 @@ env:
   ACR_HOST: ${{secrets.ACR_HOST}}
   ACR_USER: ${{secrets.ACR_USER}}
   ACR_PASS: ${{secrets.ACR_PASS}}
-  IMAGE_TAG: ${{secrets.ACR_HOST}}/generatedata:$(date +%s)
 
 jobs:
   build:
@@ -15,14 +14,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build --file Dockerfile --tag ${{env.IMAGE_TAG}} .
+      run: | 
+        IMAGE_TAG: ${{env.ACR_HOST}}/generatedata:$(date +%s)
+        docker build --file Dockerfile --tag ${{env.IMAGE_TAG}} .
+        echo ::set-output name=IMAGE_TAG::$IMAGE_TAG
     - name: Push to Azure ACR
       run: |
         echo ${{env.ACR_PASS}} | docker login -u ${{env.ACR_USER}} --password-stdin ${{env.ACR_HOST}}
-        docker push ${{env.IMAGE_TAG}}
+        docker push ${{steps.vars.outputs.IMAGE_TAG}}
         
-    
-      
-
-    
-    
