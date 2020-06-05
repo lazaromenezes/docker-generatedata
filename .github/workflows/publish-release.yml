@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Push Docker Image
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build --file Dockerfile --tag ${{env.IMAGE_TAG}}
+      run: docker build --file Dockerfile --tag ${{env.IMAGE_TAG}} .
     - name: Push to Azure ACR
       run: |
         docker login -u ${{env.ACR_USER}} -p ${{env.ACR_PASS}} ${{env.ACR_HOST}}
