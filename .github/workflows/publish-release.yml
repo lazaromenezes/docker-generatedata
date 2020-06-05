@@ -7,7 +7,7 @@ env:
   ACR_HOST: ${{secrets.ACR_HOST}}
   ACR_USER: ${{secrets.ACR_USER}}
   ACR_PASS: ${{secrets.ACR_PASS}}
-  IMAGE_TAG: lazaromenezes/generatedata:$(date +%s)
+  IMAGE_TAG: ${{env.ACR_HOST}}:lazaromenezes/generatedata:$(date +%s)
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       run: docker build --file Dockerfile --tag ${{env.IMAGE_TAG}} .
     - name: Push to Azure ACR
       run: |
-        docker login -u ${{env.ACR_USER}} -p ${{env.ACR_PASS}} ${{env.ACR_HOST}}
+        echo ${{env.ACR_PASS}} | docker login -u ${{env.ACR_USER}} --password-stdin ${{env.ACR_HOST}}
         docker push ${{env.IMAGE_TAG}}
         
     
