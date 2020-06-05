@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: | 
-        IMAGE_TAG: ${{env.ACR_HOST}}/generatedata:$(date +%s)
-        docker build --file Dockerfile --tag ${{env.IMAGE_TAG}} .
+        IMAGE_TAG=${{env.ACR_HOST}}/generatedata:$(date +%s)
+        docker build --file Dockerfile --tag $IMAGE_TAG .
         echo ::set-output name=IMAGE_TAG::$IMAGE_TAG
     - name: Push to Azure ACR
       run: |
