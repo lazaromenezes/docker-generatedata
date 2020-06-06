@@ -19,7 +19,7 @@ jobs:
       run: | 
         VERSION_TAG=${{env.ACR_HOST}}/generatedata:$(date +%s)
 
-        docker build --file Dockerfile --tag $VERSION_TAG --tag ${{env.LATERST_TAG}}.
+        docker build --file Dockerfile --tag $VERSION_TAG --tag ${{env.LATEST_TAG}}.
     - name: Push to Azure ACR
       run: |
         echo ${{env.ACR_PASS}} | docker login -u ${{env.ACR_USER}} --password-stdin ${{env.ACR_HOST}}
