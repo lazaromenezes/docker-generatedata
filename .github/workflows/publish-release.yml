@@ -7,7 +7,7 @@ env:
   ACR_HOST: ${{secrets.ACR_HOST}}
   ACR_USER: ${{secrets.ACR_USER}}
   ACR_PASS: ${{secrets.ACR_PASS}}
-  LATEST_TAG: ${{env.ACR_HOST}}/generatedata:latest
+  LATEST_TAG: ${{secrets.ACR_HOST}}/generatedata:latest
 
 jobs:
   build:
