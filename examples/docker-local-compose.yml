@@ -1,0 +1,15 @@
+version: '3'
+services:
+  generatedata:
+    image: v3:latest
+    environment:
+      GD_DB_HOSTNAME: "actminds-generatedata.mysql.database.azure.com"
+      GD_DB_NAME: "generatedata"
+      GD_DB_USERNAME: "gd@actminds-generatedata"
+      GD_DB_PASSWORD: "gd!pass#"
+      SG_API_KEY: "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"
+    restart: always
+    ports:
+      - "8000:80"
+
+
